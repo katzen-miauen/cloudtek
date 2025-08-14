@@ -1,93 +1,99 @@
-let img;
-let cols, rows;
-let size;
-let logoX, logoY;
-let targetX, targetY;
-let offscreen;
-let lastChangeTime = 0;
-let changeInterval = 3000; // менять позицию каждые 3 секунды
-let logoWidth;
+const captchaText = "cloudtek";
 
-function preload() {
-  img = loadImage("src/logo.png");
+function getRandomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  offscreen = createGraphics(windowWidth, windowHeight);
-
-  if (windowWidth > windowHeight) {
-    size = 20;
-  } else {
-    size = 10;
-  }
-
-  logoWidth = windowHeight;
-  cols = floor(width / size);
-  rows = floor(height / size);
-
-  // начальная случайная позиция
-  targetX = random(width - logoWidth);
-  targetY = random(height - logoWidth);
-  logoX = targetX;
-  logoY = targetY;
-
-  let c = document.querySelector("canvas");
-  c.style.position = "fixed";
-  c.style.top = "0";
-  c.style.left = "0";
-  c.style.width = "100vw";
-  c.style.height = "100vh";
-  c.style.zIndex = "-1";
-  c.style.mixBlendMode = "screen";
-  c.style.opacity = "50%";
+function getRandom(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
-function draw() {
-  background("black");
-  let now = millis();
+function getRandomFont() {
+  const fonts = [
+    "Arial",
+    "Verdana",
+    "Courier New",
+    "Georgia",
+    "Times New Roman",
+    "Trebuchet MS",
+    "Impact",
+  ];
+  return fonts[Math.floor(Math.random() * fonts.length)];
+}
 
-  // если пришло время сменить позицию — генерируем новую
-  if (now - lastChangeTime > changeInterval) {
-    targetX = random(width - logoWidth);
-    targetY = random(height - logoWidth);
-    lastChangeTime = now;
-  }
+function playRandomAudio(i) {
+  const audio = new Audio("/src/audio/" + i + ".mp3");
+  const audioPlayButton = document.getElementById("audioPlayButton");
 
-  // плавное движение к цели
-  logoX = lerp(logoX, targetX, 0.006);
-  logoY = lerp(logoY, targetY, 0.006);
-
-  // рисуем лого на offscreen
-  offscreen.clear();
-  offscreen.image(img, logoX, logoY, logoWidth, logoWidth);
-
-  // === Эффект волны ===
-  let t = millis() / 3000;
-  let waveSpeed = 10;
-  let waveAmp = 40;
-  let waveFreq = 0.006;
-
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      let x = i * size;
-      let y = j * size;
-
-      let dx = sin((y + t * waveSpeed * 60) * waveFreq) * waveAmp;
-      let dy = cos((x + t * waveSpeed * 60) * waveFreq) * waveAmp;
-
-      push();
-      translate(x, y);
-      scale(-1, -1);
-      copy(offscreen, x + dx, y + dy, size, size, -size, -size, size, size);
-      pop();
+  audioPlayButton.addEventListener("click", () => {
+    if (audio.paused == true) {
+      audio.play();
+      audioPlayButton.style.opacity = "50%";
+    } else {
+      audio.pause();
+      audioPlayButton.style.opacity = "100%";
     }
+  });
+
+  audio.addEventListener("ended", () => {
+    audioPlayButton.style.opacity = "100%";
+  });
+}
+
+
+function captchaGenerator() {
+  const captchaContainer = document.querySelector(".captchaContainer");
+
+  for (let i = 0; i <= captchaText.length; i++) {
+    const letter = document.createElement("div");
+    letter.textContent = captchaText.at(i);
+
+    const randomSkew = getRandom(-30, 30);
+    const randomRotation = getRandom(-10, 10);
+    const randomScale = getRandom(1, 5);
+    const randomTranslateX = getRandom(-2, 3);
+    const randomTranslateY = getRandom(-2, 2);
+    letter.style.transform = `skew(${randomSkew}deg) rotate(${randomRotation}deg) scale(${randomScale}) translate(${randomTranslateX}px,${randomTranslateY}px)`;
+    letter.style.color = "rgba(255, 255, 255, 1)";
+    letter.style.mixBlendMode = "exclusion";
+    letter.style.fontFamily = getRandomFont();
+
+    captchaContainer.appendChild(letter);
   }
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  offscreen = createGraphics(windowWidth, windowHeight);
-  cols = floor(width / size);
-  rows = floor(height / size);
+function checkCaptcha(event) {
+  event.preventDefault();
+  const captchaInput = document.querySelector(".captchaInput");
+
+  if (captchaInput.value.toLowerCase() == captchaText.toLowerCase()) {
+    toggleCaptcha();
+    console.log("correct");
+    
+  } else {
+    captchaInput.style.border = "1px solid red";
+     captchaInput.style.borderRadius = "4px"
+  }
 }
+
+function captchaButtonEvent() {
+  const button = document.querySelector(".captchaButton");
+  button.addEventListener("click", checkCaptcha);
+}
+
+function toggleCaptcha() {
+  const captchaSection = document.querySelector(".captchaSection");
+  const formSection = document.querySelector(".formSection");
+  const linkSection = document.querySelector(".linkSection");
+
+  captchaSection.classList.toggle("hidden");
+  formSection.classList.toggle("hidden");
+  linkSection.classList.toggle("hidden");
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  playRandomAudio(getRandomInteger(0, 0));
+  captchaGenerator();
+  captchaButtonEvent();
+});
