@@ -22,7 +22,7 @@ function setup() {
     size = 10;
   }
 
-  logoWidth = windowHeight;
+  logoWidth = windowHeight*1.5;
   cols = floor(width / size);
   rows = floor(height / size);
 
