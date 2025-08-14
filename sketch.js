@@ -18,11 +18,12 @@ function setup() {
 
   if (windowWidth > windowHeight) {
     size = 20;
+    logoWidth = windowHeight * 1.5;
   } else {
     size = 10;
+    logoWidth = windowHeight;
   }
 
-  logoWidth = windowHeight*1.5;
   cols = floor(width / size);
   rows = floor(height / size);
 
