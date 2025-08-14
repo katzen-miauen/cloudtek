@@ -1,11 +1,12 @@
 let img;
 let cols, rows;
-let size = 20;
+let size;
 let logoX, logoY;
 let targetX, targetY;
 let offscreen;
 let lastChangeTime = 0;
 let changeInterval = 3000; // менять позицию каждые 3 секунды
+let logoWidth;
 
 function preload() {
   img = loadImage("src/logo.png");
@@ -15,12 +16,19 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   offscreen = createGraphics(windowWidth, windowHeight);
 
+  if (windowWidth > windowHeight) {
+    size = 20;
+  } else {
+    size = 10;
+  }
+
+  logoWidth = windowHeight;
   cols = floor(width / size);
   rows = floor(height / size);
 
   // начальная случайная позиция
-  targetX = random(width - 1500);
-  targetY = random(height - 1500);
+  targetX = random(width - logoWidth);
+  targetY = random(height - logoWidth);
   logoX = targetX;
   logoY = targetY;
 
@@ -41,8 +49,8 @@ function draw() {
 
   // если пришло время сменить позицию — генерируем новую
   if (now - lastChangeTime > changeInterval) {
-    targetX = random(width - 1500);
-    targetY = random(height - 1500);
+    targetX = random(width - logoWidth);
+    targetY = random(height - logoWidth);
     lastChangeTime = now;
   }
 
@@ -52,7 +60,7 @@ function draw() {
 
   // рисуем лого на offscreen
   offscreen.clear();
-  offscreen.image(img, logoX, logoY, 1500, 1500);
+  offscreen.image(img, logoX, logoY, logoWidth, logoWidth);
 
   // === Эффект волны ===
   let t = millis() / 3000;
