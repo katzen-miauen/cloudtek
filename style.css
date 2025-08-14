@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(147, 228, 255);
+}
+
+.contentAlignment {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.captchaSection,
+.formSection,
+.linkSection {
+  background-color: white;
+  padding: 10px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.captchaWrapper,
+.linkSectionWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.captchaContainer {
+  display: flex;
+  gap: 15px;
+  height: 40px;
+  width: 100%;
+  background-color: rgb(234, 234, 234);
+  text-align: center;
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.soundCaptchaIcon {
+  transition: 100ms cubic-bezier(0.42, 0, 0.62, 0.99);
+  cursor: pointer;
+}
+
+.formSectionWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+form {
+  display: flex;
+  gap: 4px;
+}
+
+.presaveLink {
+  padding: 20px 0;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.linkSection {
+  width: 254.797px;
+}
+
+.reload {
+  color: rgb(110, 110, 110);
+  font-size: 14px;
+}
+
+.linkImage {
+  margin: 10px;
+  width: 90%;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 0 11px 0px rgba(0, 0, 0, 0.1);
+}

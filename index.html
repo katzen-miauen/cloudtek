@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.9/lib/p5.min.js"></script>
+    <script src="script.js"></script>
+    <script src="sketch.js"></script>
+  </head>
+
+  <body>
+    <audio src="src/audio/0.mp3" id="001"></audio>
+    
+    <div class="contentAlignment">
+      <div class="contentWrapper">
+        <div class="captchaSection">
+          <div class="captchaWrapper">
+            <div class="captchaContainer" id="captcha">
+              
+            </div>
+            <img src="src/image 1926988190.png" class="soundCaptchaIcon" id="audioPlayButton"/>
+          </div>
+        </div>
+
+        <div class="formSection">
+          <div class="formSectionWrapper">
+            <form class="formWrapper">
+              <div class="captchaValue">
+                <input type="text" name="captcha" class="captchaInput"  />
+              </div>
+              <button class="captchaButton">Check</button>
+            </form>
+            <a href="" class="reload">regenerate captcha</a>
+          </div>
+        </div>
+
+        <div class="linkSection hidden">
+          <div class="linkSectionWrapper">
+            <img src="src/333333.jpg" alt="EP cover" class="linkImage" />
+            <form class="presaveLink">              
+              <button onclick="window.open('https://band.link/Nhoz1', '_blank')" type="button">Presave</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
