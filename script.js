@@ -93,7 +93,8 @@ function toggleCaptcha() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  playRandomAudio(getRandomInteger(0, 0));
+  playRandomAudio(getRandomInteger(0, 39));
   captchaGenerator();
   captchaButtonEvent();
 });
+
