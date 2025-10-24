@@ -21,28 +21,25 @@ function getRandomFont() {
   return fonts[Math.floor(Math.random() * fonts.length)];
 }
 
-function playRandomAudio(i) {
-  const audio = new Audio("/src/audio/" + i + ".mp3");
-  const audioPlayButton = document.getElementById("audioPlayButton");
+function initImageGrid() {
+  const imageWrapper = document.querySelector(".imageWrapper");
+  const rows = 3;
+  const cols = 3;
+  const totalImages = rows * cols;
 
-  audioPlayButton.addEventListener("click", () => {
-    if (audio.paused == true) {
-      audio.play();
-      audioPlayButton.style.opacity = "50%";
-    } else {
-      audio.pause();
-      audioPlayButton.style.opacity = "100%";
-    }
-  });
-
-  audio.addEventListener("ended", () => {
-    audioPlayButton.style.opacity = "100%";
-  });
+  for (let i = 0; i < totalImages; i++) {
+    const container = document.createElement("div");
+    const img = document.createElement("img");
+    img.src = `src/${i}.png`;
+    container.classList.add("gridImage");
+    imageWrapper.appendChild(container);
+    container.appendChild(img);
+  }
 }
-
 
 function captchaGenerator() {
   const captchaContainer = document.querySelector(".captchaContainer");
+
 
   for (let i = 0; i <= captchaText.length; i++) {
     const letter = document.createElement("div");
@@ -54,47 +51,16 @@ function captchaGenerator() {
     const randomTranslateX = getRandom(-2, 3);
     const randomTranslateY = getRandom(-2, 2);
     letter.style.transform = `skew(${randomSkew}deg) rotate(${randomRotation}deg) scale(${randomScale}) translate(${randomTranslateX}px,${randomTranslateY}px)`;
-    letter.style.color = "rgba(255, 255, 255, 1)";
-    letter.style.mixBlendMode = "exclusion";
+    letter.style.color = "rgba(0, 0, 0, 1)";
+    // letter.style.mixBlendMode = "exclusion";
     letter.style.fontFamily = getRandomFont();
 
     captchaContainer.appendChild(letter);
   }
+
 }
-
-function checkCaptcha(event) {
-  event.preventDefault();
-  const captchaInput = document.querySelector(".captchaInput");
-
-  if (captchaInput.value.toLowerCase() == captchaText.toLowerCase()) {
-    toggleCaptcha();
-    console.log("correct");
-    
-  } else {
-    captchaInput.style.border = "1px solid red";
-     captchaInput.style.borderRadius = "4px"
-  }
-}
-
-function captchaButtonEvent() {
-  const button = document.querySelector(".captchaButton");
-  button.addEventListener("click", checkCaptcha);
-}
-
-function toggleCaptcha() {
-  const captchaSection = document.querySelector(".captchaSection");
-  const formSection = document.querySelector(".formSection");
-  const linkSection = document.querySelector(".linkSection");
-
-  captchaSection.classList.toggle("hidden");
-  formSection.classList.toggle("hidden");
-  linkSection.classList.toggle("hidden");
-}
-
 
 document.addEventListener("DOMContentLoaded", () => {
-  playRandomAudio(getRandomInteger(0, 39));
+  initImageGrid();
   captchaGenerator();
-  captchaButtonEvent();
 });
-
