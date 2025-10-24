@@ -11,6 +11,7 @@ html,
 body {
   height: 100%;
   align-content: center;
+  background-color: white;
 }
 
 body {
@@ -27,7 +28,7 @@ body {
 }
 
 .contentWrapper {
-  width: 50%;
+  width: 400px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -134,6 +135,8 @@ a {
 p {
   margin: 0;
 }
+
+
 
 @media (max-width: 746px) {
   .contentWrapper {
